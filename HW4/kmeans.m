@@ -3,7 +3,16 @@ function [output,J,uk]=kmeans(K,data,d,isplot)
 % data: input
 % d: feature dimensionality
 % isplot: plot clusters/ distortion function
-uk=rand(K,d);
+[N,~]=size(data);
+if isplot==0
+    uk=rand(K,d);
+else
+    randindex=randi(N, K, 1);
+    
+    for i=1:K
+        uk(i,:)=data(i,:);
+    end
+end
 N=size(data,1);
 
 eucDistance=zeros(N,K);
@@ -13,7 +22,6 @@ J=zeros(50,1);
 while itr<=50
     rnk=zeros(N,K);
     prev=J(itr,1);
-      
     %step2 update rnk
     for i=1:N
         for j=1:K
@@ -23,11 +31,11 @@ while itr<=50
         J(itr,1)=prev+V;
         rnk(i,I)=1;
     end
-    itr=itr+1;  
+    itr=itr+1;
     
-    if isequal(tmp,rnk)
-        break;
-    end
+    %     if isequal(tmp,rnk)
+    %         break;
+    %     end
     
     
     %update uk for x
@@ -38,7 +46,7 @@ while itr<=50
         x(isnan(x)) = 1 ;
         uk(:,k)=x(:);
     end
-    %display(uk);
+   
     for i=1:N
         for j=1:K
             tmp(i,j)=rnk(i,j);
@@ -68,7 +76,7 @@ if isplot==0
     end
 end
 
-    
+
 
 if isplot==1
     lineStyle=cellstr(['r.';'g.';'y.';'b.';'c.';'m+';'y-';'wo';'*o';'ro';'yo']);

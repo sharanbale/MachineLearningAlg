@@ -4,6 +4,14 @@ lineStyle=cellstr(['r.';'g.';'y.';'b.';'c.';'m-';'c-';'b-';'g-';'r-';'y-']);
 carray=csvread('2DGaussian.csv',1,0);
 data1=carray(:,2:3);
 
+% 5.2b
+%figure();
+for i=1:5
+    [~,J(i,:),~]=kmeans(4,data1,2,0);
+    plot(1:50,J(i,:),lineStyle{5+i});
+    hold on;
+end   
+title('5.2b, K-means distortion measure, K=4');
 
 %5.2 a
 K1=[2,3,5];
@@ -31,14 +39,7 @@ for i=1:500
 end
 title('5.2a K-means clusters, K=5');
 
-% 5.2b
-figure();
-for i=1:5
-    [~,J(i,:),~]=kmeans(4,data1,2,0);
-    plot(1:50,J(i,:),lineStyle{5+i});
-    hold on;
-end   
-title('5.2b, K-means distortion measure, K=4');
+
 
 
 %5.3
